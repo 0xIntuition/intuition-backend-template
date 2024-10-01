@@ -1,0 +1,22 @@
+{
+  "name": "intuition-local-chain",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "docker compose up -d",
+    "stop": "docker compose down -v",
+    "create-predicates": "tsx src/create-predicates.ts",
+    "dev": "pnpm stop && pnpm start && pnpm create-predicates"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@0xintuition/protocol": "link:../../intuition-ts/packages/protocol",
+    "tsx": "^4.16.5",
+    "viem": "2.18.8"
+  }
+}

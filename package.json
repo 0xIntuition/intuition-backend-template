@@ -1,0 +1,13 @@
+{
+  "name": "0xintuition/backend-template",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "hasura-local:apply": "cd hasura && hasura metadata apply --admin-secret myadminsecretkey && cd ..",
+    "hasura-local:export": "cd hasura && hasura metadata export --admin-secret myadminsecretkey && cd ..",
+    "dev:start": "docker-compose up -d ",
+    "dev:stop:reset": "docker-compose down -v",
+    "dev:stop": "docker-compose down",
+    "dev": "pnpm dev:stop:reset && pnpm dev:start"
+  }
+}

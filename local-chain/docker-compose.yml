@@ -1,0 +1,37 @@
+name: intuition-local-chain
+services:
+  geth:
+    container_name: geth
+    image: ethereum/client-go
+    ports:
+      - '8545:8545'
+    healthcheck:
+      test: ['CMD', 'curl', 'http://localhost:8545']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    entrypoint: sh /root/init-script.sh
+    command: '--dev --dev.period=1 --cache=8192 --gcmode=full --history.state=0 --history.transactions=0 --syncmode=full --cache.gc=0 --http --http.api=eth,web3,net --mine  --http.port=8545 --http.vhosts=* --http.addr=0.0.0.0 --http.corsdomain="https://remix.ethereum.org" --datadir=/data --password=/root/password.txt'
+    volumes:
+      - data_geth:/data
+      - ./geth/genesis.json:/config/genesis.json
+      - ./geth/init-script.sh:/root/init-script.sh
+      - ./geth/keystore.json:/data/keystore/UTC--2024-06-03T19-15-34.118131000Z--63e87dc2366dc7f1be110ded239879422e165d96
+      - ./geth/password.txt:/root/password.txt
+
+  ipfs:
+    container_name: ipfs
+    build:
+      context: .
+      dockerfile: ./ipfs/Dockerfile
+    ports:
+      - 4001:4001
+      - 4002:4002/udp
+      - 4003:4003
+      - 5001:5001
+    volumes:
+      - data_ipfs:/data/ipfs
+
+volumes:
+  data_ipfs:
+  data_geth:
