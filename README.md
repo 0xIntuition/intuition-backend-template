@@ -14,7 +14,10 @@ Indexing
 ```
 cd ponder
 pnpm i
+cp .env.example .env.local
 ```
+
+Edit `.env.local`
 
 Start indexing base mainnet
 
