@@ -3,45 +3,6 @@ import { getEns, hourId, shortId } from "./utils";
 import { handleTriple } from "./atom-value/triple-handler";
 
 ponder.on("EthMultiVault:TripleCreated", async ({ event, context }) => {
-  const { Block, Transaction, Log } = context.db;
-
-  await Block.upsert({
-    id: event.block.hash,
-    create: {
-      ...event.block,
-      baseFeePerGas: event.block.baseFeePerGas !== null ? event.block.baseFeePerGas : undefined,
-      totalDifficulty: event.block.totalDifficulty !== null ? event.block.totalDifficulty : undefined,
-      difficulty: event.block.difficulty !== null ? event.block.difficulty : undefined,
-      mixHash: event.block.mixHash !== null ? event.block.mixHash : undefined,
-      nonce: event.block.nonce !== null ? event.block.nonce : undefined,
-      sha3Uncles: event.block.sha3Uncles !== null ? event.block.sha3Uncles : undefined,
-    },
-    update: {},
-  });
-
-  await Transaction.upsert({
-    id: event.transaction.hash,
-    create: {
-      ...event.transaction,
-      timestamp: event.block.timestamp,
-      to: event.transaction.to !== null ? event.transaction.to : undefined,
-      gas: event.transaction.gas !== null ? event.transaction.gas : undefined,
-      gasPrice: event.transaction.gasPrice !== null ? event.transaction.gasPrice : undefined,
-      r: event.transaction.r !== null ? event.transaction.r : undefined,
-      s: event.transaction.s !== null ? event.transaction.s : undefined,
-      v: event.transaction.v !== null ? event.transaction.v : undefined,
-    },
-    update: {},
-  });
-
-  await Log.upsert({
-    id: event.log.id,
-    create: {
-      ...event.log,
-      timestamp: event.block.timestamp,
-    },
-    update: {},
-  });
 
   const { Event, Account, Triple, Atom, Vault, Stats, StatsHour } = context.db;
 
