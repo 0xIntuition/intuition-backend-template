@@ -7,3 +7,77 @@ configuration:
   custom_name: accounts
   custom_root_fields:
     select_by_pk: account
+object_relationships:
+  - name: atom
+    using:
+      manual_configuration:
+        column_mapping:
+          atomId: id
+        insertion_order: null
+        remote_table:
+          name: Atom
+          schema: public
+array_relationships:
+  - name: createdAtoms
+    using:
+      manual_configuration:
+        column_mapping:
+          id: creatorId
+        insertion_order: null
+        remote_table:
+          name: Atom
+          schema: public
+  - name: createdTriples
+    using:
+      manual_configuration:
+        column_mapping:
+          id: creatorId
+        insertion_order: null
+        remote_table:
+          name: Triple
+          schema: public
+  - name: deposits
+    using:
+      manual_configuration:
+        column_mapping:
+          id: senderId
+        insertion_order: null
+        remote_table:
+          name: Deposit
+          schema: public
+  - name: feeTransfers
+    using:
+      manual_configuration:
+        column_mapping:
+          id: senderId
+        insertion_order: null
+        remote_table:
+          name: FeeTransfer
+          schema: public
+  - name: positions
+    using:
+      manual_configuration:
+        column_mapping:
+          id: accountId
+        insertion_order: null
+        remote_table:
+          name: Position
+          schema: public
+  - name: redemptions
+    using:
+      manual_configuration:
+        column_mapping:
+          id: senderId
+        insertion_order: null
+        remote_table:
+          name: Redemption
+          schema: public
+  - name: signals
+    using:
+      manual_configuration:
+        column_mapping:
+          id: accountId
+        insertion_order: null
+        remote_table:
+          name: Signal
+          schema: public

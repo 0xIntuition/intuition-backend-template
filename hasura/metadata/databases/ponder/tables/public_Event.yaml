@@ -7,3 +7,49 @@ configuration:
   custom_name: events
   custom_root_fields:
     select_by_pk: event
+object_relationships:
+  - name: atom
+    using:
+      manual_configuration:
+        column_mapping:
+          atomId: id
+        insertion_order: null
+        remote_table:
+          name: Atom
+          schema: public
+  - name: deposit
+    using:
+      manual_configuration:
+        column_mapping:
+          depositId: id
+        insertion_order: null
+        remote_table:
+          name: Deposit
+          schema: public
+  - name: feeTransfer
+    using:
+      manual_configuration:
+        column_mapping:
+          feeTransferId: id
+        insertion_order: null
+        remote_table:
+          name: FeeTransfer
+          schema: public
+  - name: redemption
+    using:
+      manual_configuration:
+        column_mapping:
+          redemptionId: id
+        insertion_order: null
+        remote_table:
+          name: Redemption
+          schema: public
+  - name: triple
+    using:
+      manual_configuration:
+        column_mapping:
+          tripleId: id
+        insertion_order: null
+        remote_table:
+          name: Triple
+          schema: public

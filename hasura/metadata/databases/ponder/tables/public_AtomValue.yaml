@@ -7,3 +7,58 @@ configuration:
   custom_name: atomValues
   custom_root_fields:
     select_by_pk: atomValue
+object_relationships:
+  - name: account
+    using:
+      manual_configuration:
+        column_mapping:
+          accountId: id
+        insertion_order: null
+        remote_table:
+          name: Account
+          schema: public
+  - name: atom
+    using:
+      manual_configuration:
+        column_mapping:
+          atomId: id
+        insertion_order: null
+        remote_table:
+          name: Atom
+          schema: public
+  - name: book
+    using:
+      manual_configuration:
+        column_mapping:
+          bookId: id
+        insertion_order: null
+        remote_table:
+          name: Book
+          schema: public
+  - name: organization
+    using:
+      manual_configuration:
+        column_mapping:
+          organizationId: id
+        insertion_order: null
+        remote_table:
+          name: Organization
+          schema: public
+  - name: person
+    using:
+      manual_configuration:
+        column_mapping:
+          personId: id
+        insertion_order: null
+        remote_table:
+          name: Person
+          schema: public
+  - name: thing
+    using:
+      manual_configuration:
+        column_mapping:
+          thingId: id
+        insertion_order: null
+        remote_table:
+          name: Thing
+          schema: public

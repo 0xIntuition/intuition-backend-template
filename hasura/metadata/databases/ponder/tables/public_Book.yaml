@@ -7,3 +7,13 @@ configuration:
   custom_name: books
   custom_root_fields:
     select_by_pk: book
+object_relationships:
+  - name: atom
+    using:
+      manual_configuration:
+        column_mapping:
+          atomId: id
+        insertion_order: null
+        remote_table:
+          name: Atom
+          schema: public

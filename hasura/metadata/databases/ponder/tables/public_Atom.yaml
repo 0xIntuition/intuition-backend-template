@@ -7,3 +7,59 @@ configuration:
   custom_name: atoms
   custom_root_fields:
     select_by_pk: atom
+object_relationships:
+  - name: creator
+    using:
+      manual_configuration:
+        column_mapping:
+          creatorId: id
+        insertion_order: null
+        remote_table:
+          name: Account
+          schema: public
+  - name: value
+    using:
+      manual_configuration:
+        column_mapping:
+          valueId: id
+        insertion_order: null
+        remote_table:
+          name: AtomValue
+          schema: public
+  - name: vault
+    using:
+      manual_configuration:
+        column_mapping:
+          vaultId: id
+        insertion_order: null
+        remote_table:
+          name: Vault
+          schema: public
+array_relationships:
+  - name: asObject
+    using:
+      manual_configuration:
+        column_mapping:
+          id: objectId
+        insertion_order: null
+        remote_table:
+          name: Triple
+          schema: public
+  - name: asPredicate
+    using:
+      manual_configuration:
+        column_mapping:
+          id: predicateId
+        insertion_order: null
+        remote_table:
+          name: Triple
+          schema: public
+  - name: asSubject
+    using:
+      manual_configuration:
+        column_mapping:
+          id: subjectId
+        insertion_order: null
+        remote_table:
+          name: Triple
+          schema: public
