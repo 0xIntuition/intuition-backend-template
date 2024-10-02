@@ -1,6 +1,7 @@
 # Intuition backend template
 
-![diagram-export-01-10-2024-18_33_32](https://github.com/user-attachments/assets/84cfdc7c-8a1e-4331-84b9-25337250ee8f)
+![diagram-export-02-10-2024-17_07_54](https://github.com/user-attachments/assets/0aa99e3d-f24a-45c5-ab2b-e2719e9bb902)
+
 
 
 Start postgres, hasura, pgweb
