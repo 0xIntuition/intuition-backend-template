@@ -20,7 +20,7 @@ export default createConfig({
       abi: EthMultiVaultAbi,
       address: "0x430BbF52503Bd4801E51182f4cB9f8F534225DE5",
       startBlock: 18528268,
-      endBlock: 18528268 + (30 * 60 * 24 * 5),
+      endBlock: 18528268 + (30 * 60 * 24 * 4),
     },
   },
   blocks: {

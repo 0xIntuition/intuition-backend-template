@@ -1,0 +1,19 @@
+table:
+  name: Organization
+  schema: public
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: organizations
+  custom_root_fields:
+    select_by_pk: organization
+object_relationships:
+  - name: atom
+    using:
+      manual_configuration:
+        column_mapping:
+          atomId: id
+        insertion_order: null
+        remote_table:
+          name: Atom
+          schema: public

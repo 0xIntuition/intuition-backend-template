@@ -1,0 +1,55 @@
+table:
+  name: Signal
+  schema: public
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: signals
+  custom_root_fields:
+    select_by_pk: signal
+object_relationships:
+  - name: account
+    using:
+      manual_configuration:
+        column_mapping:
+          accountId: id
+        insertion_order: null
+        remote_table:
+          name: Account
+          schema: public
+  - name: atom
+    using:
+      manual_configuration:
+        column_mapping:
+          atomId: id
+        insertion_order: null
+        remote_table:
+          name: Atom
+          schema: public
+  - name: deposit
+    using:
+      manual_configuration:
+        column_mapping:
+          depositId: id
+        insertion_order: null
+        remote_table:
+          name: Deposit
+          schema: public
+  - name: redemption
+    using:
+      manual_configuration:
+        column_mapping:
+          redemptionId: id
+        insertion_order: null
+        remote_table:
+          name: Redemption
+          schema: public
+  - name: triple
+    using:
+      manual_configuration:
+        column_mapping:
+          tripleId: id
+        insertion_order: null
+        remote_table:
+          name: Triple
+          schema: public

@@ -1,0 +1,28 @@
+table:
+  name: FeeTransfer
+  schema: public
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: feeTranfers
+  custom_root_fields:
+    select_by_pk: feeTransfers
+object_relationships:
+  - name: receiver
+    using:
+      manual_configuration:
+        column_mapping:
+          receiverId: id
+        insertion_order: null
+        remote_table:
+          name: Account
+          schema: public
+  - name: sender
+    using:
+      manual_configuration:
+        column_mapping:
+          senderId: id
+        insertion_order: null
+        remote_table:
+          name: Account
+          schema: public

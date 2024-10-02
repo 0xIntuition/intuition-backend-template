@@ -1,6 +1,19 @@
-- name: Ponder
+- name: apollo
   definition:
-    url: http://host.docker.internal:42069/graphql
+    url: http://host.docker.internal:4000/graphql
     timeout_seconds: 60
     customization: {}
   comment: ""
+  remote_relationships:
+    - relationships:
+        - definition:
+            to_source:
+              field_mapping:
+                id: id
+              relationship_type: array
+              source: ponder
+              table:
+                name: Account
+                schema: public
+          name: follower
+      type_name: Follower
