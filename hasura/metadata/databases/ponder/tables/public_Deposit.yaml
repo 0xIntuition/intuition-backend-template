@@ -1,0 +1,9 @@
+table:
+  name: Deposit
+  schema: public
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: deposits
+  custom_root_fields:
+    select_by_pk: deposit

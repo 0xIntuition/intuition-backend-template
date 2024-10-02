@@ -1,0 +1,9 @@
+table:
+  name: Signal
+  schema: public
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: signals
+  custom_root_fields:
+    select_by_pk: signal

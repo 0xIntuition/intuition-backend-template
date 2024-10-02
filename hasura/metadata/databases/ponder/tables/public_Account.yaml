@@ -1,0 +1,9 @@
+table:
+  name: Account
+  schema: public
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: accounts
+  custom_root_fields:
+    select_by_pk: account

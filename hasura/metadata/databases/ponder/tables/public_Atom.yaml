@@ -1,0 +1,9 @@
+table:
+  name: Atom
+  schema: public
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: atoms
+  custom_root_fields:
+    select_by_pk: atom
