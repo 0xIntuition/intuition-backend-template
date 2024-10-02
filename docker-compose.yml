@@ -22,7 +22,7 @@ services:
 
   graphql-engine:
     container_name: hasura
-    image: hasura/graphql-engine:v2.38.0
+    image: hasura/graphql-engine:v2.42.0
     ports:
       - '8080:8080'
     restart: always
@@ -48,7 +48,7 @@ services:
 
   data-connector-agent:
     container_name: hasura-data-connector
-    image: hasura/graphql-data-connector:v2.38.0
+    image: hasura/graphql-data-connector:v2.42.0
     restart: always
     ports:
       - 8083:8081
