@@ -17,3 +17,19 @@ object_relationships:
         remote_table:
           name: Atom
           schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - atomId
+        - id
+        - description
+        - email
+        - identifier
+        - image
+        - name
+        - url
+      filter: {}
+      limit: 100
+      allow_aggregations: true
+    comment: ""

@@ -26,3 +26,18 @@ object_relationships:
         remote_table:
           name: Account
           schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - receiverId
+        - senderId
+        - transactionHash
+        - amount
+        - blockNumber
+        - blockTimestamp
+        - id
+      filter: {}
+      limit: 100
+      allow_aggregations: true
+    comment: ""
