@@ -54,3 +54,17 @@ array_relationships:
         remote_table:
           name: Position
           schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - positionCount
+        - atomId
+        - currentSharePrice
+        - id
+        - totalShares
+        - tripleId
+      filter: {}
+      limit: 100
+      allow_aggregations: true
+    comment: ""

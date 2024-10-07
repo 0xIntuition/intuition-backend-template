@@ -92,3 +92,16 @@ remote_relationships:
               account: $id
         remote_schema: apollo
     name: followers
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - type
+        - atomId
+        - id
+        - image
+        - label
+      filter: {}
+      limit: 100
+      allow_aggregations: true
+    comment: ""

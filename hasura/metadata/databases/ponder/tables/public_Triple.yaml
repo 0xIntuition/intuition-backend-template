@@ -62,3 +62,22 @@ object_relationships:
         remote_table:
           name: Vault
           schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - creatorId
+        - transactionHash
+        - blockNumber
+        - blockTimestamp
+        - counterVaultId
+        - id
+        - objectId
+        - predicateId
+        - subjectId
+        - vaultId
+        - label
+      filter: {}
+      limit: 100
+      allow_aggregations: true
+    comment: ""

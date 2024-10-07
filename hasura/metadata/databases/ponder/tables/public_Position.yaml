@@ -26,3 +26,15 @@ object_relationships:
         remote_table:
           name: Vault
           schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - accountId
+        - shares
+        - vaultId
+        - id
+      filter: {}
+      limit: 100
+      allow_aggregations: true
+    comment: ""

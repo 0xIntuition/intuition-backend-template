@@ -7,3 +7,19 @@ configuration:
   custom_name: stats
   custom_root_fields:
     select_by_pk: stat
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - id
+        - totalAccounts
+        - totalAtoms
+        - totalPositions
+        - totalSignals
+        - totalTriples
+        - contractBalance
+        - totalFees
+      filter: {}
+      limit: 100
+      allow_aggregations: true
+    comment: ""

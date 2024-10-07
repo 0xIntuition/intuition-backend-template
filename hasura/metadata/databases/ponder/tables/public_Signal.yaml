@@ -53,3 +53,22 @@ object_relationships:
         remote_table:
           name: Triple
           schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - accountId
+        - transactionHash
+        - atomId
+        - blockNumber
+        - blockTimestamp
+        - delta
+        - relativeStrength
+        - tripleId
+        - depositId
+        - id
+        - redemptionId
+      filter: {}
+      limit: 100
+      allow_aggregations: true
+    comment: ""

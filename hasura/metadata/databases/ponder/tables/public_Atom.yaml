@@ -63,3 +63,24 @@ array_relationships:
         remote_table:
           name: Triple
           schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - creatorId
+        - transactionHash
+        - walletId
+        - blockNumber
+        - blockTimestamp
+        - id
+        - valueId
+        - vaultId
+        - data
+        - emoji
+        - image
+        - label
+        - type
+      filter: {}
+      limit: 100
+      allow_aggregations: true
+    comment: ""

@@ -62,3 +62,18 @@ object_relationships:
         remote_table:
           name: Thing
           schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - accountId
+        - atomId
+        - bookId
+        - id
+        - organizationId
+        - personId
+        - thingId
+      filter: {}
+      limit: 100
+      allow_aggregations: true
+    comment: ""
