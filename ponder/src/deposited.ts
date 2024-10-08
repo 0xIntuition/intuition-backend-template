@@ -20,13 +20,13 @@ ponder.on("EthMultiVault:Deposited", async ({ event, context }) => {
   let newAccounts = 0;
 
   const senderAccount = await Account.findUnique({
-    id: sender,
+    id: sender.toLowerCase(),
   });
 
   if (senderAccount === null) {
     const { name, image } = await getEns(sender);
     await Account.create({
-      id: sender,
+      id: sender.toLowerCase(),
       data: {
         label: name || shortId(sender),
         image,
@@ -38,7 +38,7 @@ ponder.on("EthMultiVault:Deposited", async ({ event, context }) => {
 
   // TODO: handle new accounts for receiver
   await Account.upsert({
-    id: receiver,
+    id: receiver.toLowerCase(),
     create: {
       label: shortId(receiver),
       type: isAtomWallet ? "AtomWallet" : "Default",
@@ -73,8 +73,8 @@ ponder.on("EthMultiVault:Deposited", async ({ event, context }) => {
   await Deposit.create({
     id: event.log.id,
     data: {
-      senderId: sender,
-      receiverId: receiver,
+      senderId: sender.toLowerCase(),
+      receiverId: receiver.toLowerCase(),
       vaultId,
       entryFee,
       isTriple,
@@ -92,7 +92,7 @@ ponder.on("EthMultiVault:Deposited", async ({ event, context }) => {
   let newPositions = 0;
   let newSignals = 0;
 
-  const positionId = `${vaultId}-${receiver}`;
+  const positionId = `${vaultId}-${receiver.toLowerCase()}`;
   // Check if position exists
   const position = await Position.findUnique({
     id: positionId,
@@ -102,7 +102,7 @@ ponder.on("EthMultiVault:Deposited", async ({ event, context }) => {
     await Position.create({
       id: positionId,
       data: {
-        accountId: receiver,
+        accountId: receiver.toLowerCase(),
         vaultId,
         shares: receiverTotalSharesInVault,
       }
@@ -119,7 +119,7 @@ ponder.on("EthMultiVault:Deposited", async ({ event, context }) => {
       await Position.upsert({
         id: positionId,
         create: {
-          accountId: receiver,
+          accountId: receiver.toLowerCase(),
           vaultId,
           shares: receiverTotalSharesInVault,
         },
@@ -137,7 +137,7 @@ ponder.on("EthMultiVault:Deposited", async ({ event, context }) => {
     await Signal.create({
       id: event.log.id,
       data: {
-        accountId: sender,
+        accountId: sender.toLowerCase(),
         delta: senderAssetsAfterTotalFees,
         relativeStrength,
         atomId: isTriple ? undefined : vaultId,
@@ -190,7 +190,6 @@ ponder.on("EthMultiVault:Deposited", async ({ event, context }) => {
       depositId: event.log.id,
       blockNumber: event.block.number,
       blockTimestamp: event.block.timestamp,
-      blockHash: event.block.hash,
       transactionHash: event.transaction.hash,
     },
   });

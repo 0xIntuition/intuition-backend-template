@@ -16,13 +16,13 @@ ponder.on("EthMultiVault:Redeemed", async ({ event, context }) => {
   } = event.args;
 
   const senderAccount = await Account.findUnique({
-    id: sender,
+    id: sender.toLowerCase(),
   });
 
   if (senderAccount === null) {
     const { name, image } = await getEns(sender);
     await Account.create({
-      id: sender,
+      id: sender.toLowerCase(),
       data: {
         label: name || shortId(sender),
         image,
@@ -32,7 +32,7 @@ ponder.on("EthMultiVault:Redeemed", async ({ event, context }) => {
   }
 
   await Account.upsert({
-    id: receiver,
+    id: receiver.toLowerCase(),
     create: {
       label: shortId(receiver),
       type: "Default",
@@ -43,8 +43,8 @@ ponder.on("EthMultiVault:Redeemed", async ({ event, context }) => {
   await Redemption.create({
     id: event.log.id,
     data: {
-      senderId: sender,
-      receiverId: receiver,
+      senderId: sender.toLowerCase(),
+      receiverId: receiver.toLowerCase(),
       vaultId,
       sharesRedeemedBySender,
       assetsForReceiver,
@@ -60,7 +60,7 @@ ponder.on("EthMultiVault:Redeemed", async ({ event, context }) => {
     address: context.contracts.EthMultiVault.address,
   });
 
-  const positionId = `${vaultId}-${sender}`;
+  const positionId = `${vaultId}-${sender.toLowerCase()}`;
   let deletedPositions = 0;
 
   let stats;
@@ -80,7 +80,7 @@ ponder.on("EthMultiVault:Redeemed", async ({ event, context }) => {
     stats = statsData;
   } else {
     await Position.update({
-      id: `${vaultId}-${sender}`,
+      id: `${vaultId}-${sender.toLowerCase()}`,
       data: {
         shares: senderTotalSharesInVault,
       }
@@ -121,7 +121,7 @@ ponder.on("EthMultiVault:Redeemed", async ({ event, context }) => {
   await Signal.create({
     id: event.log.id,
     data: {
-      accountId: sender,
+      accountId: sender.toLowerCase(),
       delta: assetsForReceiver * -1n,
       relativeStrength,
       atomId: vault.atomId,
@@ -142,7 +142,6 @@ ponder.on("EthMultiVault:Redeemed", async ({ event, context }) => {
       tripleId: vault.tripleId,
       blockNumber: event.block.number,
       blockTimestamp: event.block.timestamp,
-      blockHash: event.block.hash,
       transactionHash: event.transaction.hash,
     },
   });

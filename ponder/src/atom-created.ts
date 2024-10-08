@@ -35,13 +35,13 @@ ponder.on("EthMultiVault:AtomCreated", async ({ event, context }) => {
   let newAccounts = 0;
 
   const creatorAccount = await Account.findUnique({
-    id: creator,
+    id: creator.toLowerCase(),
   });
 
   if (creatorAccount === null) {
     const { name, image } = await getEns(creator);
     await Account.create({
-      id: creator,
+      id: creator.toLowerCase(),
       data: {
         label: name || shortId(creator),
         image,
@@ -52,7 +52,7 @@ ponder.on("EthMultiVault:AtomCreated", async ({ event, context }) => {
   }
 
   await Account.upsert({
-    id: atomWallet,
+    id: atomWallet.toLowerCase(),
     create: {
       label: shortId(atomWallet),
       type: "AtomWallet",
@@ -89,7 +89,7 @@ ponder.on("EthMultiVault:AtomCreated", async ({ event, context }) => {
       atomImage = image;
     }
     await Account.upsert({
-      id: data as Address,
+      id: data.toLowerCase() as Address,
       create: {
         label: name || shortId(data as Address),
         image,
@@ -106,8 +106,8 @@ ponder.on("EthMultiVault:AtomCreated", async ({ event, context }) => {
     id: vaultID,
     data: {
       vaultId: vaultID,
-      creatorId: creator,
-      walletId: atomWallet,
+      creatorId: creator.toLowerCase(),
+      walletId: atomWallet.toLowerCase(),
       data,
       type,
       valueId,
@@ -127,7 +127,6 @@ ponder.on("EthMultiVault:AtomCreated", async ({ event, context }) => {
       atomId: vaultID,
       blockNumber: event.block.number,
       blockTimestamp: event.block.timestamp,
-      blockHash: event.block.hash,
       transactionHash: event.transaction.hash,
     },
   });
@@ -165,7 +164,7 @@ ponder.on("EthMultiVault:AtomCreated", async ({ event, context }) => {
   });
 
   await Account.update({
-    id: atomWallet,
+    id: atomWallet.toLowerCase(),
     data: {
       label: updatedAtom!.label,
       image: updatedAtom!.image,

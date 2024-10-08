@@ -57,7 +57,6 @@ export default createSchema((p) => ({
 
     blockNumber: p.bigint(),
     blockTimestamp: p.bigint(),
-    blockHash: p.hex(),
     transactionHash: p.hex(),
   }, {
     typeIndex: p.index("type"),
@@ -65,7 +64,6 @@ export default createSchema((p) => ({
     tripleIndex: p.index("tripleId"),
     blockNumberIndex: p.index("blockNumber"),
     blockTimestampIndex: p.index("blockTimestamp"),
-    blockHashIndex: p.index("blockHash"),
     transactionHashIndex: p.index("transactionHash"),
   }),
 
@@ -76,7 +74,7 @@ export default createSchema((p) => ({
   ]),
 
   Account: p.createTable({
-    id: p.hex(),
+    id: p.string(),
     atomId: p.bigint().references("Atom.id").optional(),
     atom: p.one("atomId"),
     label: p.string(),
@@ -108,9 +106,9 @@ export default createSchema((p) => ({
 
   Atom: p.createTable({
     id: p.bigint(),
-    walletId: p.hex().references("Account.id"),
+    walletId: p.string().references("Account.id"),
 
-    creatorId: p.hex().references("Account.id"),
+    creatorId: p.string().references("Account.id"),
     creator: p.one("creatorId"),
 
     vaultId: p.bigint().references("Vault.id"),
@@ -139,7 +137,7 @@ export default createSchema((p) => ({
 
   Triple: p.createTable({
     id: p.bigint(),
-    creatorId: p.hex().references("Account.id"),
+    creatorId: p.string().references("Account.id"),
     subjectId: p.bigint().references("Atom.id"),
     predicateId: p.bigint().references("Atom.id"),
     objectId: p.bigint().references("Atom.id"),
@@ -189,9 +187,9 @@ export default createSchema((p) => ({
 
   FeeTransfer: p.createTable({
     id: p.string(),
-    senderId: p.hex().references("Account.id"),
+    senderId: p.string().references("Account.id"),
     sender: p.one("senderId"),
-    receiverId: p.hex().references("Account.id"),
+    receiverId: p.string().references("Account.id"),
     receiver: p.one("receiverId"),
     amount: p.bigint(),
     blockNumber: p.bigint(),
@@ -205,10 +203,10 @@ export default createSchema((p) => ({
   Deposit: p.createTable({
     id: p.string(),
 
-    senderId: p.hex().references("Account.id"),
+    senderId: p.string().references("Account.id"),
     sender: p.one("senderId"),
 
-    receiverId: p.hex().references("Account.id"),
+    receiverId: p.string().references("Account.id"),
     receiver: p.one("receiverId"),
 
     receiverTotalSharesInVault: p.bigint(),
@@ -234,10 +232,10 @@ export default createSchema((p) => ({
   Redemption: p.createTable({
     id: p.string(),
 
-    senderId: p.hex().references("Account.id"),
+    senderId: p.string().references("Account.id"),
     sender: p.one("senderId"),
 
-    receiverId: p.hex().references("Account.id"),
+    receiverId: p.string().references("Account.id"),
     receiver: p.one("receiverId"),
 
     senderTotalSharesInVault: p.bigint(),
@@ -260,7 +258,7 @@ export default createSchema((p) => ({
   Position: p.createTable({
     id: p.string(),
 
-    accountId: p.hex().references("Account.id"),
+    accountId: p.string().references("Account.id"),
     account: p.one("accountId"),
 
     vaultId: p.bigint().references("Vault.id"),
@@ -277,7 +275,7 @@ export default createSchema((p) => ({
     delta: p.bigint(),
     relativeStrength: p.bigint(),
 
-    accountId: p.hex().references("Account.id"),
+    accountId: p.string().references("Account.id"),
     account: p.one("accountId"),
 
     atomId: p.bigint().references("Atom.id").optional(),
@@ -306,7 +304,7 @@ export default createSchema((p) => ({
     id: p.bigint(),
     atomId: p.bigint().references("Atom.id"),
 
-    accountId: p.hex().references("Account.id").optional(),
+    accountId: p.string().references("Account.id").optional(),
     account: p.one("accountId"),
 
     thingId: p.bigint().references("Thing.id").optional(),

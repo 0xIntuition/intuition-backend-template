@@ -10,13 +10,13 @@ ponder.on("EthMultiVault:FeesTransferred", async ({ event, context }) => {
   let newAccounts = 0;
 
   const senderAccount = await Account.findUnique({
-    id: sender,
+    id: sender.toLowerCase(),
   });
 
   if (senderAccount === null) {
     const { name, image } = await getEns(sender);
     await Account.create({
-      id: sender,
+      id: sender.toLowerCase(),
       data: {
         label: name || shortId(sender),
         image,
@@ -27,7 +27,7 @@ ponder.on("EthMultiVault:FeesTransferred", async ({ event, context }) => {
   }
 
   await Account.upsert({
-    id: protocolMultisig,
+    id: protocolMultisig.toLowerCase(),
     create: {
       label: "Protocol Multisig",
       type: "ProtocolVault",
@@ -38,7 +38,7 @@ ponder.on("EthMultiVault:FeesTransferred", async ({ event, context }) => {
   await FeeTransfer.create({
     id: event.log.id,
     data: {
-      senderId: sender,
+      senderId: sender.toLowerCase(),
       receiverId: protocolMultisig,
       amount,
       blockNumber: event.block.number,
@@ -81,7 +81,6 @@ ponder.on("EthMultiVault:FeesTransferred", async ({ event, context }) => {
       feeTransferId: event.log.id,
       blockNumber: event.block.number,
       blockTimestamp: event.block.timestamp,
-      blockHash: event.block.hash,
       transactionHash: event.transaction.hash,
     },
   });
