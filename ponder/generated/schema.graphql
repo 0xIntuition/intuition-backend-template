@@ -263,7 +263,6 @@ type Event {
   redemption: Redemption
   blockNumber: BigInt!
   blockTimestamp: BigInt!
-  blockHash: String!
   transactionHash: String!
 }
 
@@ -339,18 +338,22 @@ input AtomFilter {
   walletId_not: String
   walletId_in: [String]
   walletId_not_in: [String]
-  walletId_gt: String
-  walletId_lt: String
-  walletId_gte: String
-  walletId_lte: String
+  walletId_contains: String
+  walletId_not_contains: String
+  walletId_starts_with: String
+  walletId_ends_with: String
+  walletId_not_starts_with: String
+  walletId_not_ends_with: String
   creatorId: String
   creatorId_not: String
   creatorId_in: [String]
   creatorId_not_in: [String]
-  creatorId_gt: String
-  creatorId_lt: String
-  creatorId_gte: String
-  creatorId_lte: String
+  creatorId_contains: String
+  creatorId_not_contains: String
+  creatorId_starts_with: String
+  creatorId_ends_with: String
+  creatorId_not_starts_with: String
+  creatorId_not_ends_with: String
   vaultId: BigInt
   vaultId_not: BigInt
   vaultId_in: [BigInt]
@@ -522,10 +525,12 @@ input PositionFilter {
   accountId_not: String
   accountId_in: [String]
   accountId_not_in: [String]
-  accountId_gt: String
-  accountId_lt: String
-  accountId_gte: String
-  accountId_lte: String
+  accountId_contains: String
+  accountId_not_contains: String
+  accountId_starts_with: String
+  accountId_ends_with: String
+  accountId_not_starts_with: String
+  accountId_not_ends_with: String
   vaultId: BigInt
   vaultId_not: BigInt
   vaultId_in: [BigInt]
@@ -585,18 +590,22 @@ input DepositFilter {
   senderId_not: String
   senderId_in: [String]
   senderId_not_in: [String]
-  senderId_gt: String
-  senderId_lt: String
-  senderId_gte: String
-  senderId_lte: String
+  senderId_contains: String
+  senderId_not_contains: String
+  senderId_starts_with: String
+  senderId_ends_with: String
+  senderId_not_starts_with: String
+  senderId_not_ends_with: String
   receiverId: String
   receiverId_not: String
   receiverId_in: [String]
   receiverId_not_in: [String]
-  receiverId_gt: String
-  receiverId_lt: String
-  receiverId_gte: String
-  receiverId_lte: String
+  receiverId_contains: String
+  receiverId_not_contains: String
+  receiverId_starts_with: String
+  receiverId_ends_with: String
+  receiverId_not_starts_with: String
+  receiverId_not_ends_with: String
   receiverTotalSharesInVault: BigInt
   receiverTotalSharesInVault_not: BigInt
   receiverTotalSharesInVault_in: [BigInt]
@@ -710,18 +719,22 @@ input RedemptionFilter {
   senderId_not: String
   senderId_in: [String]
   senderId_not_in: [String]
-  senderId_gt: String
-  senderId_lt: String
-  senderId_gte: String
-  senderId_lte: String
+  senderId_contains: String
+  senderId_not_contains: String
+  senderId_starts_with: String
+  senderId_ends_with: String
+  senderId_not_starts_with: String
+  senderId_not_ends_with: String
   receiverId: String
   receiverId_not: String
   receiverId_in: [String]
   receiverId_not_in: [String]
-  receiverId_gt: String
-  receiverId_lt: String
-  receiverId_gte: String
-  receiverId_lte: String
+  receiverId_contains: String
+  receiverId_not_contains: String
+  receiverId_starts_with: String
+  receiverId_ends_with: String
+  receiverId_not_starts_with: String
+  receiverId_not_ends_with: String
   senderTotalSharesInVault: BigInt
   senderTotalSharesInVault_not: BigInt
   senderTotalSharesInVault_in: [BigInt]
@@ -803,10 +816,12 @@ input TripleFilter {
   creatorId_not: String
   creatorId_in: [String]
   creatorId_not_in: [String]
-  creatorId_gt: String
-  creatorId_lt: String
-  creatorId_gte: String
-  creatorId_lte: String
+  creatorId_contains: String
+  creatorId_not_contains: String
+  creatorId_starts_with: String
+  creatorId_ends_with: String
+  creatorId_not_starts_with: String
+  creatorId_not_ends_with: String
   subjectId: BigInt
   subjectId_not: BigInt
   subjectId_in: [BigInt]
@@ -917,18 +932,22 @@ input FeeTransferFilter {
   senderId_not: String
   senderId_in: [String]
   senderId_not_in: [String]
-  senderId_gt: String
-  senderId_lt: String
-  senderId_gte: String
-  senderId_lte: String
+  senderId_contains: String
+  senderId_not_contains: String
+  senderId_starts_with: String
+  senderId_ends_with: String
+  senderId_not_starts_with: String
+  senderId_not_ends_with: String
   receiverId: String
   receiverId_not: String
   receiverId_in: [String]
   receiverId_not_in: [String]
-  receiverId_gt: String
-  receiverId_lt: String
-  receiverId_gte: String
-  receiverId_lte: String
+  receiverId_contains: String
+  receiverId_not_contains: String
+  receiverId_starts_with: String
+  receiverId_ends_with: String
+  receiverId_not_starts_with: String
+  receiverId_not_ends_with: String
   amount: BigInt
   amount_not: BigInt
   amount_in: [BigInt]
@@ -1020,10 +1039,12 @@ input SignalFilter {
   accountId_not: String
   accountId_in: [String]
   accountId_not_in: [String]
-  accountId_gt: String
-  accountId_lt: String
-  accountId_gte: String
-  accountId_lte: String
+  accountId_contains: String
+  accountId_not_contains: String
+  accountId_starts_with: String
+  accountId_ends_with: String
+  accountId_not_starts_with: String
+  accountId_not_ends_with: String
   atomId: BigInt
   atomId_not: BigInt
   atomId_in: [BigInt]
@@ -1228,14 +1249,6 @@ input EventFilter {
   blockTimestamp_lt: BigInt
   blockTimestamp_gte: BigInt
   blockTimestamp_lte: BigInt
-  blockHash: String
-  blockHash_not: String
-  blockHash_in: [String]
-  blockHash_not_in: [String]
-  blockHash_gt: String
-  blockHash_lt: String
-  blockHash_gte: String
-  blockHash_lte: String
   transactionHash: String
   transactionHash_not: String
   transactionHash_in: [String]
@@ -1258,10 +1271,12 @@ input AccountFilter {
   id_not: String
   id_in: [String]
   id_not_in: [String]
-  id_gt: String
-  id_lt: String
-  id_gte: String
-  id_lte: String
+  id_contains: String
+  id_not_contains: String
+  id_starts_with: String
+  id_ends_with: String
+  id_not_starts_with: String
+  id_not_ends_with: String
   atomId: BigInt
   atomId_not: BigInt
   atomId_in: [BigInt]
@@ -1382,10 +1397,12 @@ input AtomValueFilter {
   accountId_not: String
   accountId_in: [String]
   accountId_not_in: [String]
-  accountId_gt: String
-  accountId_lt: String
-  accountId_gte: String
-  accountId_lte: String
+  accountId_contains: String
+  accountId_not_contains: String
+  accountId_starts_with: String
+  accountId_ends_with: String
+  accountId_not_starts_with: String
+  accountId_not_ends_with: String
   thingId: BigInt
   thingId_not: BigInt
   thingId_in: [BigInt]

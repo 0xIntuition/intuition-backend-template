@@ -53,13 +53,13 @@ ponder.on("EthMultiVault:TripleCreated", async ({ event, context }) => {
   let newAccounts = 0;
 
   const creatorAccount = await Account.findUnique({
-    id: creator,
+    id: creator.toLowerCase(),
   });
 
   if (creatorAccount === null) {
     const { name, image } = await getEns(creator);
     await Account.create({
-      id: creator,
+      id: creator.toLowerCase(),
       data: {
         label: name || shortId(creator),
         image,
@@ -81,7 +81,7 @@ ponder.on("EthMultiVault:TripleCreated", async ({ event, context }) => {
     id: vaultID,
     data: {
       vaultId: vaultID,
-      creatorId: creator,
+      creatorId: creator.toLowerCase(),
       counterVaultId,
       subjectId,
       predicateId,
@@ -128,7 +128,6 @@ ponder.on("EthMultiVault:TripleCreated", async ({ event, context }) => {
       tripleId: vaultID,
       blockNumber: event.block.number,
       blockTimestamp: event.block.timestamp,
-      blockHash: event.block.hash,
       transactionHash: event.transaction.hash,
     },
   });
