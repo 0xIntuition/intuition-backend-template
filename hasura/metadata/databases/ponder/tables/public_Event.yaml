@@ -57,7 +57,6 @@ select_permissions:
   - role: anonymous
     permission:
       columns:
-        - blockHash
         - transactionHash
         - atomId
         - blockNumber

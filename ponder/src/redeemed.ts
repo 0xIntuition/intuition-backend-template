@@ -56,10 +56,6 @@ ponder.on("EthMultiVault:Redeemed", async ({ event, context }) => {
     },
   });
 
-  const contractBalance = await context.client.getBalance({
-    address: context.contracts.EthMultiVault.address,
-  });
-
   const positionId = `${vaultId}-${sender.toLowerCase()}`;
   let deletedPositions = 0;
 
@@ -74,7 +70,7 @@ ponder.on("EthMultiVault:Redeemed", async ({ event, context }) => {
       id: 0,
       data: ({ current }) => ({
         totalPositions: current.totalPositions - 1,
-        contractBalance,
+        contractBalance: current.contractBalance - assetsForReceiver,
       }),
     });
     stats = statsData;
@@ -87,8 +83,8 @@ ponder.on("EthMultiVault:Redeemed", async ({ event, context }) => {
     });
     const { id, ...statsData } = await Stats.update({
       id: 0,
-      data: () => ({
-        contractBalance,
+      data: ({ current }) => ({
+        contractBalance: current.contractBalance - assetsForReceiver,
       }),
     });
     stats = statsData;

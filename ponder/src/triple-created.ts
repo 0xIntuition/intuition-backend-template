@@ -93,10 +93,6 @@ ponder.on("EthMultiVault:TripleCreated", async ({ event, context }) => {
     },
   });
 
-  const contractBalance = await context.client.getBalance({
-    address: context.contracts.EthMultiVault.address,
-  });
-
   const { id, ...stats } = await Stats.upsert({
     id: 0,
     create: {
@@ -106,7 +102,7 @@ ponder.on("EthMultiVault:TripleCreated", async ({ event, context }) => {
       totalSignals: 0,
       totalPositions: 0,
       totalFees: 0n,
-      contractBalance,
+      contractBalance: 0n,
     },
     update: ({ current }) => ({
       totalTriples: current.totalTriples + 1,

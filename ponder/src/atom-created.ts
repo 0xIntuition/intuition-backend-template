@@ -10,10 +10,6 @@ ponder.on("EthMultiVault:AtomCreated", async ({ event, context }) => {
 
   const { creator, vaultID, atomData, atomWallet } = event.args;
 
-  const contractBalance = await context.client.getBalance({
-    address: context.contracts.EthMultiVault.address,
-  });
-
   const currentSharePrice = await context.client.readContract({
     abi: context.contracts.EthMultiVault.abi,
     address: context.contracts.EthMultiVault.address,
@@ -140,7 +136,7 @@ ponder.on("EthMultiVault:AtomCreated", async ({ event, context }) => {
       totalSignals: 0,
       totalPositions: 0,
       totalFees: 0n,
-      contractBalance,
+      contractBalance: 0n,
     },
     update: ({ current }) => ({
       totalAtoms: current.totalAtoms + 1,

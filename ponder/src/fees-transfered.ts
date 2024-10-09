@@ -47,10 +47,6 @@ ponder.on("EthMultiVault:FeesTransferred", async ({ event, context }) => {
     },
   });
 
-  const contractBalance = await context.client.getBalance({
-    address: context.contracts.EthMultiVault.address,
-  });
-
   const { id, ...stats } = await Stats.upsert({
     id: 0,
     create: {
@@ -60,7 +56,7 @@ ponder.on("EthMultiVault:FeesTransferred", async ({ event, context }) => {
       totalSignals: 0,
       totalPositions: 0,
       totalFees: amount,
-      contractBalance,
+      contractBalance: 0n,
     },
     update: ({ current }) => ({
       totalFees: current.totalFees + amount,

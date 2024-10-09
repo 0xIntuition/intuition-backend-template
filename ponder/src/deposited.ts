@@ -152,10 +152,6 @@ ponder.on("EthMultiVault:Deposited", async ({ event, context }) => {
     newSignals = 1;
   }
 
-  const contractBalance = await context.client.getBalance({
-    address: context.contracts.EthMultiVault.address,
-  });
-
   const { id, ...stats } = await Stats.upsert({
     id: 0,
     create: {
@@ -165,13 +161,13 @@ ponder.on("EthMultiVault:Deposited", async ({ event, context }) => {
       totalSignals: newSignals,
       totalPositions: 1,
       totalFees: 0n,
-      contractBalance,
+      contractBalance: 0n,
     },
     update: ({ current }) => ({
       totalPositions: current.totalPositions + newPositions,
       totalSignals: current.totalSignals + newSignals,
       totalAccounts: current.totalAccounts + newAccounts,
-      contractBalance,
+      contractBalance: current.contractBalance + senderAssetsAfterTotalFees,
     }),
   });
 
