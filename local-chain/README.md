@@ -11,6 +11,8 @@ Also you have to checkout and build [0xIntuition/intuition-ts](https://github.co
 pnpm i
 ```
 
+Setup local environment vars, by copying `.env.example` to `.env`
+
 ## Common usage
 
 ```

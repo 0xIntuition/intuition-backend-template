@@ -80,6 +80,14 @@ export default createSchema((p) => ({
     label: p.string(),
     image: p.string().optional(),
     type: p.enum("AccountType"),
+    // TODO: add aggregate fields
+    // createdAtomCount
+    // createdTripleCount
+    // positionCount
+    // claimCount
+    // signalCount
+    // followingCount
+    // folowersCount
     createdAtoms: p.many("Atom.creatorId"),
     createdTriples: p.many("Triple.creatorId"),
     feeTransfers: p.many("FeeTransfer.senderId"),
@@ -87,7 +95,10 @@ export default createSchema((p) => ({
     redemptions: p.many("Redemption.senderId"),
     positions: p.many("Position.accountId"),
     signals: p.many("Signal.accountId"),
+    claims: p.many("Claim.accountId"),
   }),
+
+  // TODO: add List entity
 
   AtomType: p.createEnum([
     "Unknown",
@@ -268,6 +279,40 @@ export default createSchema((p) => ({
   }, {
     accountIndex: p.index("accountId"),
     vaultIndex: p.index("vaultId"),
+  }),
+
+  Claim: p.createTable({
+    // triple.id + '-' + account.id
+    id: p.string(),
+    accountId: p.string().references("Account.id"),
+    tripleId: p.bigint().references("Triple.id"),
+    subjectId: p.bigint().references("Atom.id"),
+    predicateId: p.bigint().references("Atom.id"),
+    objectId: p.bigint().references("Atom.id"),
+
+    label: p.string().optional(),
+
+    shares: p.bigint(),
+    counterShares: p.bigint(),
+
+    vaultId: p.bigint().references("Vault.id"),
+    counterVaultId: p.bigint().references("Vault.id"),
+
+    account: p.one("accountId"),
+    triple: p.one("tripleId"),
+    subject: p.one("subjectId"),
+    predicate: p.one("predicateId"),
+    object: p.one("objectId"),
+    vault: p.one("vaultId"),
+    counterVault: p.one("counterVaultId"),
+
+  }, {
+    accountIndex: p.index("accountId"),
+    subjectIndex: p.index("subjectId"),
+    predicateIndex: p.index("predicateId"),
+    objectIndex: p.index("objectId"),
+    vaultIndex: p.index("vaultId"),
+    tripleIndex: p.index("tripleId"),
   }),
 
   Signal: p.createTable({

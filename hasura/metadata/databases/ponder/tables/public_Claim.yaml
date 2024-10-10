@@ -1,116 +1,91 @@
 table:
-  name: Account
+  name: Claim
   schema: public
 configuration:
   column_config: {}
   custom_column_names: {}
-  custom_name: accounts
+  custom_name: claims
   custom_root_fields:
-    select_by_pk: account
+    select_by_pk: claim
 object_relationships:
-  - name: atom
+  - name: account
     using:
       manual_configuration:
         column_mapping:
-          atomId: id
+          accountId: id
+        insertion_order: null
+        remote_table:
+          name: Account
+          schema: public
+  - name: counterVault
+    using:
+      manual_configuration:
+        column_mapping:
+          counterVaultId: id
+        insertion_order: null
+        remote_table:
+          name: Vault
+          schema: public
+  - name: object
+    using:
+      manual_configuration:
+        column_mapping:
+          objectId: id
         insertion_order: null
         remote_table:
           name: Atom
           schema: public
-array_relationships:
-  - name: claims
+  - name: predicate
     using:
       manual_configuration:
         column_mapping:
-          id: accountId
-        insertion_order: null
-        remote_table:
-          name: Claim
-          schema: public
-  - name: createdAtoms
-    using:
-      manual_configuration:
-        column_mapping:
-          id: creatorId
+          predicateId: id
         insertion_order: null
         remote_table:
           name: Atom
           schema: public
-  - name: createdTriples
+  - name: subject
     using:
       manual_configuration:
         column_mapping:
-          id: creatorId
+          subjectId: id
+        insertion_order: null
+        remote_table:
+          name: Atom
+          schema: public
+  - name: triple
+    using:
+      manual_configuration:
+        column_mapping:
+          tripleId: id
         insertion_order: null
         remote_table:
           name: Triple
           schema: public
-  - name: deposits
+  - name: vault
     using:
       manual_configuration:
         column_mapping:
-          id: senderId
+          vaultId: id
         insertion_order: null
         remote_table:
-          name: Deposit
+          name: Vault
           schema: public
-  - name: feeTransfers
-    using:
-      manual_configuration:
-        column_mapping:
-          id: senderId
-        insertion_order: null
-        remote_table:
-          name: FeeTransfer
-          schema: public
-  - name: positions
-    using:
-      manual_configuration:
-        column_mapping:
-          id: accountId
-        insertion_order: null
-        remote_table:
-          name: Position
-          schema: public
-  - name: redemptions
-    using:
-      manual_configuration:
-        column_mapping:
-          id: senderId
-        insertion_order: null
-        remote_table:
-          name: Redemption
-          schema: public
-  - name: signals
-    using:
-      manual_configuration:
-        column_mapping:
-          id: accountId
-        insertion_order: null
-        remote_table:
-          name: Signal
-          schema: public
-remote_relationships:
-  - definition:
-      to_remote_schema:
-        lhs_fields:
-          - id
-        remote_field:
-          followers:
-            arguments:
-              account: $id
-        remote_schema: apollo
-    name: followers
 select_permissions:
   - role: anonymous
     permission:
       columns:
-        - type
-        - atomId
+        - counterShares
+        - counterVaultId
+        - objectId
+        - predicateId
+        - shares
+        - subjectId
+        - tripleId
+        - vaultId
+        - accountId
         - id
-        - image
         - label
       filter: {}
       limit: 100
-      allow_aggregations: true
     comment: ""

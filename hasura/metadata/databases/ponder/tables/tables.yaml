@@ -3,6 +3,7 @@
 - "!include public_AtomValue.yaml"
 - "!include public_Book.yaml"
 - "!include public_ChainlinkPrice.yaml"
+- "!include public_Claim.yaml"
 - "!include public_Deposit.yaml"
 - "!include public_Event.yaml"
 - "!include public_FeeTransfer.yaml"

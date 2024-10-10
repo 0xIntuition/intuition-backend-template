@@ -3,7 +3,7 @@ import { getAbsoluteTripleId, getEns, hourId, shortId } from "./utils";
 
 ponder.on("EthMultiVault:Redeemed", async ({ event, context }) => {
 
-  const { Event, Account, Redemption, Position, Vault, Signal, Stats, StatsHour } = context.db;
+  const { Event, Account, Redemption, Position, Claim, Triple, Vault, Signal, Stats, StatsHour } = context.db;
 
   const {
     sender,
@@ -56,6 +56,30 @@ ponder.on("EthMultiVault:Redeemed", async ({ event, context }) => {
     },
   });
 
+  const currentSharePrice = await context.client.readContract({
+    abi: context.contracts.EthMultiVault.abi,
+    address: context.contracts.EthMultiVault.address,
+    args: [vaultId],
+    functionName: "currentSharePrice",
+  });
+
+  const vault = await Vault.update({
+    id: vaultId,
+    data: ({ current }) => ({
+      totalShares: current.totalShares - sharesRedeemedBySender,
+      currentSharePrice,
+      positionCount: current.positionCount - deletedPositions,
+    })
+  });
+
+  let triple;
+
+  if (vault.tripleId) {
+    triple = await Triple.findUnique({
+      id: vault.tripleId,
+    });
+  }
+
   const positionId = `${vaultId}-${sender.toLowerCase()}`;
   let deletedPositions = 0;
 
@@ -63,6 +87,11 @@ ponder.on("EthMultiVault:Redeemed", async ({ event, context }) => {
 
   if (senderTotalSharesInVault === 0n) {
     await Position.delete({ id: positionId });
+
+    if (triple) {
+      const claimId = `${triple.id}-${sender.toLowerCase()}`;
+      await Claim.delete({ id: claimId });
+    }
 
     deletedPositions = 1;
 
@@ -81,6 +110,17 @@ ponder.on("EthMultiVault:Redeemed", async ({ event, context }) => {
         shares: senderTotalSharesInVault,
       }
     });
+
+    if (triple) {
+      await Claim.update({
+        id: `${triple.id}-${sender.toLowerCase()}`,
+        data: ({ current }) => ({
+          shares: vault.id === triple.vaultId ? senderTotalSharesInVault : current.shares,
+          counterShares: vault.id === triple.counterVaultId ? senderTotalSharesInVault : current.counterShares,
+        }),
+      });
+    }
+
     const { id, ...statsData } = await Stats.update({
       id: 0,
       data: ({ current }) => ({
@@ -96,21 +136,7 @@ ponder.on("EthMultiVault:Redeemed", async ({ event, context }) => {
     update: stats,
   });
 
-  const currentSharePrice = await context.client.readContract({
-    abi: context.contracts.EthMultiVault.abi,
-    address: context.contracts.EthMultiVault.address,
-    args: [vaultId],
-    functionName: "currentSharePrice",
-  });
 
-  const vault = await Vault.update({
-    id: vaultId,
-    data: ({ current }) => ({
-      totalShares: current.totalShares - sharesRedeemedBySender,
-      currentSharePrice,
-      positionCount: current.positionCount - deletedPositions,
-    })
-  });
 
   const relativeStrength = 0n;
 

@@ -16,6 +16,10 @@
   "license": "ISC",
   "dependencies": {
     "@0xintuition/protocol": "link:../../intuition-ts/packages/protocol",
+    "@faker-js/faker": "^9.0.3",
+    "@pinata/sdk": "^2.1.0",
+    "dotenv": "^16.4.5",
+    "schema-dts": "^1.1.2",
     "tsx": "^4.16.5",
     "viem": "2.18.8"
   }

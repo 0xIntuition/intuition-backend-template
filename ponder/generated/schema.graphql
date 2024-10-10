@@ -23,6 +23,8 @@ type Query {
   redemptions(where: RedemptionFilter, orderBy: String, orderDirection: String, before: String, after: String, limit: Int): RedemptionPage!
   position(id: String!): Position
   positions(where: PositionFilter, orderBy: String, orderDirection: String, before: String, after: String, limit: Int): PositionPage!
+  claim(id: String!): Claim
+  claims(where: ClaimFilter, orderBy: String, orderDirection: String, before: String, after: String, limit: Int): ClaimPage!
   signal(id: String!): Signal
   signals(where: SignalFilter, orderBy: String, orderDirection: String, before: String, after: String, limit: Int): SignalPage!
   atomValue(id: BigInt!): AtomValue
@@ -310,6 +312,7 @@ type Account {
   redemptions(where: RedemptionFilter, orderBy: String, orderDirection: String, before: String, after: String, limit: Int): RedemptionPage
   positions(where: PositionFilter, orderBy: String, orderDirection: String, before: String, after: String, limit: Int): PositionPage
   signals(where: SignalFilter, orderBy: String, orderDirection: String, before: String, after: String, limit: Int): SignalPage
+  claims(where: ClaimFilter, orderBy: String, orderDirection: String, before: String, after: String, limit: Int): ClaimPage
 }
 
 enum AccountType {
@@ -1105,6 +1108,131 @@ input SignalFilter {
   transactionHash_lt: String
   transactionHash_gte: String
   transactionHash_lte: String
+}
+
+type ClaimPage {
+  items: [Claim!]!
+  pageInfo: PageInfo!
+}
+
+type Claim {
+  id: String!
+  accountId: String!
+  tripleId: BigInt!
+  subjectId: BigInt!
+  predicateId: BigInt!
+  objectId: BigInt!
+  label: String
+  shares: BigInt!
+  counterShares: BigInt!
+  vaultId: BigInt!
+  counterVaultId: BigInt!
+  account: Account!
+  triple: Triple!
+  subject: Atom!
+  predicate: Atom!
+  object: Atom!
+  vault: Vault!
+  counterVault: Vault!
+}
+
+input ClaimFilter {
+  AND: [ClaimFilter]
+  OR: [ClaimFilter]
+  id: String
+  id_not: String
+  id_in: [String]
+  id_not_in: [String]
+  id_contains: String
+  id_not_contains: String
+  id_starts_with: String
+  id_ends_with: String
+  id_not_starts_with: String
+  id_not_ends_with: String
+  accountId: String
+  accountId_not: String
+  accountId_in: [String]
+  accountId_not_in: [String]
+  accountId_contains: String
+  accountId_not_contains: String
+  accountId_starts_with: String
+  accountId_ends_with: String
+  accountId_not_starts_with: String
+  accountId_not_ends_with: String
+  tripleId: BigInt
+  tripleId_not: BigInt
+  tripleId_in: [BigInt]
+  tripleId_not_in: [BigInt]
+  tripleId_gt: BigInt
+  tripleId_lt: BigInt
+  tripleId_gte: BigInt
+  tripleId_lte: BigInt
+  subjectId: BigInt
+  subjectId_not: BigInt
+  subjectId_in: [BigInt]
+  subjectId_not_in: [BigInt]
+  subjectId_gt: BigInt
+  subjectId_lt: BigInt
+  subjectId_gte: BigInt
+  subjectId_lte: BigInt
+  predicateId: BigInt
+  predicateId_not: BigInt
+  predicateId_in: [BigInt]
+  predicateId_not_in: [BigInt]
+  predicateId_gt: BigInt
+  predicateId_lt: BigInt
+  predicateId_gte: BigInt
+  predicateId_lte: BigInt
+  objectId: BigInt
+  objectId_not: BigInt
+  objectId_in: [BigInt]
+  objectId_not_in: [BigInt]
+  objectId_gt: BigInt
+  objectId_lt: BigInt
+  objectId_gte: BigInt
+  objectId_lte: BigInt
+  label: String
+  label_not: String
+  label_in: [String]
+  label_not_in: [String]
+  label_contains: String
+  label_not_contains: String
+  label_starts_with: String
+  label_ends_with: String
+  label_not_starts_with: String
+  label_not_ends_with: String
+  shares: BigInt
+  shares_not: BigInt
+  shares_in: [BigInt]
+  shares_not_in: [BigInt]
+  shares_gt: BigInt
+  shares_lt: BigInt
+  shares_gte: BigInt
+  shares_lte: BigInt
+  counterShares: BigInt
+  counterShares_not: BigInt
+  counterShares_in: [BigInt]
+  counterShares_not_in: [BigInt]
+  counterShares_gt: BigInt
+  counterShares_lt: BigInt
+  counterShares_gte: BigInt
+  counterShares_lte: BigInt
+  vaultId: BigInt
+  vaultId_not: BigInt
+  vaultId_in: [BigInt]
+  vaultId_not_in: [BigInt]
+  vaultId_gt: BigInt
+  vaultId_lt: BigInt
+  vaultId_gte: BigInt
+  vaultId_lte: BigInt
+  counterVaultId: BigInt
+  counterVaultId_not: BigInt
+  counterVaultId_in: [BigInt]
+  counterVaultId_not_in: [BigInt]
+  counterVaultId_gt: BigInt
+  counterVaultId_lt: BigInt
+  counterVaultId_gte: BigInt
+  counterVaultId_lte: BigInt
 }
 
 type AtomValue {

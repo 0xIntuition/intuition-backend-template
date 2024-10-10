@@ -3,6 +3,7 @@ import { ADMIN, MNEMONIC } from './constants'
 import { getOrDeployAndInit } from './deploy'
 import { mnemonicToAccount } from 'viem/accounts'
 import { Multivault } from '@0xintuition/protocol'
+import { pinataPinJSON } from './pinata'
 
 const local = defineChain({
   id: 1337,
@@ -66,4 +67,10 @@ export async function getOrCreateAtom(multivault: Multivault, uri: string) {
     console.log(`vaultId: ${vaultId}`)
     return vaultId
   }
+}
+
+export async function getOrCreateAtomWithJson(multivault: Multivault, json: any) {
+  // TODO: Check if the JSON is already pinned
+  const cid = await pinataPinJSON(json)
+  return getOrCreateAtom(multivault, `ipfs://${cid}`)
 }

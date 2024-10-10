@@ -3,7 +3,7 @@ import { getAbsoluteTripleId, getEns, hourId, shortId } from "./utils";
 
 ponder.on("EthMultiVault:Deposited", async ({ event, context }) => {
 
-  const { Event, Account, Deposit, Position, Vault, Signal, Stats, StatsHour } = context.db;
+  const { Event, Account, Deposit, Triple, Position, Claim, Vault, Signal, Stats, StatsHour } = context.db;
 
   const {
     sender,
@@ -53,7 +53,7 @@ ponder.on("EthMultiVault:Deposited", async ({ event, context }) => {
     functionName: "currentSharePrice",
   });
 
-  await Vault.upsert({
+  const vault = await Vault.upsert({
     id: vaultId,
     create: {
       totalShares: sharesForReceiver,
@@ -98,6 +98,14 @@ ponder.on("EthMultiVault:Deposited", async ({ event, context }) => {
     id: positionId,
   });
 
+  let triple;
+
+  if (vault.tripleId) {
+    triple = await Triple.findUnique({
+      id: vault.tripleId,
+    });
+  }
+
   if (position === null && receiverTotalSharesInVault != 0n) {// todo: check if this is correct
     await Position.create({
       id: positionId,
@@ -114,6 +122,27 @@ ponder.on("EthMultiVault:Deposited", async ({ event, context }) => {
         positionCount: current.positionCount + newPositions,
       })
     });
+
+    if (triple) {
+      await Claim.create({
+        id: `${triple.id}-${receiver.toLowerCase()}`,
+        data: {
+          accountId: receiver.toLowerCase(),
+
+          tripleId: triple.id,
+          subjectId: triple.subjectId,
+          predicateId: triple.predicateId,
+          objectId: triple.objectId,
+          label: triple.label,
+
+          vaultId: triple.vaultId,
+          counterVaultId: triple.counterVaultId,
+
+          shares: vault.id === triple.vaultId ? receiverTotalSharesInVault : 0n,
+          counterShares: vault.id === triple.counterVaultId ? receiverTotalSharesInVault : 0n,
+        }
+      });
+    }
   } else {
     if (receiverTotalSharesInVault !== 0n) {
       await Position.upsert({
@@ -127,6 +156,31 @@ ponder.on("EthMultiVault:Deposited", async ({ event, context }) => {
           shares: receiverTotalSharesInVault,
         }
       });
+
+      if (triple) {
+        await Claim.upsert({
+          id: `${triple.id}-${receiver.toLowerCase()}`,
+          create: {
+            accountId: receiver.toLowerCase(),
+
+            tripleId: triple.id,
+            subjectId: triple.subjectId,
+            predicateId: triple.predicateId,
+            objectId: triple.objectId,
+            label: triple.label,
+
+            vaultId: triple.vaultId,
+            counterVaultId: triple.counterVaultId,
+
+            shares: vault.id === triple.vaultId ? receiverTotalSharesInVault : 0n,
+            counterShares: vault.id === triple.counterVaultId ? receiverTotalSharesInVault : 0n,
+          },
+          update: {
+            shares: vault.id === triple.vaultId ? receiverTotalSharesInVault : 0n,
+            counterShares: vault.id === triple.counterVaultId ? receiverTotalSharesInVault : 0n,
+          }
+        });
+      }
     }
   }
 
