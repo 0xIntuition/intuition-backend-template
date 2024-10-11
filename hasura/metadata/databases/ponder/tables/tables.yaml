@@ -10,6 +10,7 @@
 - "!include public_Organization.yaml"
 - "!include public_Person.yaml"
 - "!include public_Position.yaml"
+- "!include public_PredicateObject.yaml"
 - "!include public_Redemption.yaml"
 - "!include public_Signal.yaml"
 - "!include public_Stats.yaml"

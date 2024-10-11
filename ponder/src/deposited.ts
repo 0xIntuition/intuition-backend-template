@@ -3,7 +3,7 @@ import { getAbsoluteTripleId, getEns, hourId, shortId } from "./utils";
 
 ponder.on("EthMultiVault:Deposited", async ({ event, context }) => {
 
-  const { Event, Account, Deposit, Triple, Position, Claim, Vault, Signal, Stats, StatsHour } = context.db;
+  const { Event, Account, Deposit, Triple, PredicateObject, Position, Claim, Vault, Signal, Stats, StatsHour } = context.db;
 
   const {
     sender,
@@ -142,6 +142,20 @@ ponder.on("EthMultiVault:Deposited", async ({ event, context }) => {
           counterShares: vault.id === triple.counterVaultId ? receiverTotalSharesInVault : 0n,
         }
       });
+      await PredicateObject.upsert({
+        id: `${triple.predicateId}-${triple.objectId}`,
+        create: {
+          predicateId: triple.predicateId,
+          objectId: triple.objectId,
+          claimCount: 1,
+          tripleCount: 1,
+        },
+        update: ({ current }) => {
+          return {
+            claimCount: current.claimCount + 1,
+          }
+        }
+      });
     }
   } else {
     if (receiverTotalSharesInVault !== 0n) {
@@ -180,6 +194,7 @@ ponder.on("EthMultiVault:Deposited", async ({ event, context }) => {
             counterShares: vault.id === triple.counterVaultId ? receiverTotalSharesInVault : 0n,
           }
         });
+
       }
     }
   }

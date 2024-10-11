@@ -2,7 +2,7 @@ import { Context, Schema } from "@/generated";
 import { Address } from "viem";
 
 export async function handleTriple(context: Context, triple: Schema["Triple"]) {
-  const { Account, Atom, Position, Claim } = context.db;
+  const { Account, Atom, Position, Claim, PredicateObject } = context.db;
 
   // Because of race conditions, we need to make sure Claims are created for this Triple
   // This happens when a Triple is created with initialDeposit > 0
@@ -26,6 +26,17 @@ export async function handleTriple(context: Context, triple: Schema["Triple"]) {
         counterVaultId: triple.counterVaultId,
         shares: position.shares,
         counterShares: 0n,
+      },
+      update: {},
+    });
+
+    await PredicateObject.upsert({
+      id: `${triple.predicateId}-${triple.objectId}`,
+      create: {
+        predicateId: triple.predicateId,
+        objectId: triple.objectId,
+        claimCount: 1,
+        tripleCount: 1,
       },
       update: {},
     });

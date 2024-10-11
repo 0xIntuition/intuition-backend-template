@@ -3,7 +3,7 @@ import { getAbsoluteTripleId, getEns, hourId, shortId } from "./utils";
 
 ponder.on("EthMultiVault:Redeemed", async ({ event, context }) => {
 
-  const { Event, Account, Redemption, Position, Claim, Triple, Vault, Signal, Stats, StatsHour } = context.db;
+  const { Event, Account, Redemption, Position, PredicateObject, Claim, Triple, Vault, Signal, Stats, StatsHour } = context.db;
 
   const {
     sender,
@@ -91,6 +91,12 @@ ponder.on("EthMultiVault:Redeemed", async ({ event, context }) => {
     if (triple) {
       const claimId = `${triple.id}-${sender.toLowerCase()}`;
       await Claim.delete({ id: claimId });
+      await PredicateObject.update({
+        id: `${triple.predicateId}-${triple.objectId}`,
+        data: ({ current }) => ({
+          claimCount: current.claimCount - 1,
+        }),
+      });
     }
 
     deletedPositions = 1;

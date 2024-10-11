@@ -25,6 +25,8 @@ type Query {
   positions(where: PositionFilter, orderBy: String, orderDirection: String, before: String, after: String, limit: Int): PositionPage!
   claim(id: String!): Claim
   claims(where: ClaimFilter, orderBy: String, orderDirection: String, before: String, after: String, limit: Int): ClaimPage!
+  predicateObject(id: String!): PredicateObject
+  predicateObjects(where: PredicateObjectFilter, orderBy: String, orderDirection: String, before: String, after: String, limit: Int): PredicateObjectPage!
   signal(id: String!): Signal
   signals(where: SignalFilter, orderBy: String, orderDirection: String, before: String, after: String, limit: Int): SignalPage!
   atomValue(id: BigInt!): AtomValue
@@ -1495,6 +1497,68 @@ input VaultFilter {
   positionCount_lt: Int
   positionCount_gte: Int
   positionCount_lte: Int
+}
+
+type PredicateObject {
+  id: String!
+  predicateId: BigInt!
+  predicate: Atom!
+  objectId: BigInt!
+  object: Atom!
+  tripleCount: Int!
+  claimCount: Int!
+}
+
+type PredicateObjectPage {
+  items: [PredicateObject!]!
+  pageInfo: PageInfo!
+}
+
+input PredicateObjectFilter {
+  AND: [PredicateObjectFilter]
+  OR: [PredicateObjectFilter]
+  id: String
+  id_not: String
+  id_in: [String]
+  id_not_in: [String]
+  id_contains: String
+  id_not_contains: String
+  id_starts_with: String
+  id_ends_with: String
+  id_not_starts_with: String
+  id_not_ends_with: String
+  predicateId: BigInt
+  predicateId_not: BigInt
+  predicateId_in: [BigInt]
+  predicateId_not_in: [BigInt]
+  predicateId_gt: BigInt
+  predicateId_lt: BigInt
+  predicateId_gte: BigInt
+  predicateId_lte: BigInt
+  objectId: BigInt
+  objectId_not: BigInt
+  objectId_in: [BigInt]
+  objectId_not_in: [BigInt]
+  objectId_gt: BigInt
+  objectId_lt: BigInt
+  objectId_gte: BigInt
+  objectId_lte: BigInt
+  tripleCount: Int
+  tripleCount_not: Int
+  tripleCount_in: [Int]
+  tripleCount_not_in: [Int]
+  tripleCount_gt: Int
+  tripleCount_lt: Int
+  tripleCount_gte: Int
+  tripleCount_lte: Int
+  claimCount: Int
+  claimCount_not: Int
+  claimCount_in: [Int]
+  claimCount_not_in: [Int]
+  claimCount_gt: Int
+  claimCount_lt: Int
+  claimCount_gte: Int
+  claimCount_lte: Int
 }
 
 type AtomValuePage {

@@ -81,11 +81,6 @@ export default createSchema((p) => ({
     image: p.string().optional(),
     type: p.enum("AccountType"),
     // TODO: add aggregate fields
-    // createdAtomCount
-    // createdTripleCount
-    // positionCount
-    // claimCount
-    // signalCount
     // followingCount
     // folowersCount
     createdAtoms: p.many("Atom.creatorId"),
@@ -97,8 +92,6 @@ export default createSchema((p) => ({
     signals: p.many("Signal.accountId"),
     claims: p.many("Claim.accountId"),
   }),
-
-  // TODO: add List entity
 
   AtomType: p.createEnum([
     "Unknown",
@@ -313,6 +306,19 @@ export default createSchema((p) => ({
     objectIndex: p.index("objectId"),
     vaultIndex: p.index("vaultId"),
     tripleIndex: p.index("tripleId"),
+  }),
+
+  PredicateObject: p.createTable({
+    id: p.string(),
+    predicateId: p.bigint().references("Atom.id"),
+    predicate: p.one("predicateId"),
+    objectId: p.bigint().references("Atom.id"),
+    object: p.one("objectId"),
+    tripleCount: p.int(),
+    claimCount: p.int(),
+  }, {
+    predicateIndex: p.index("predicateId"),
+    objectIndex: p.index("objectId"),
   }),
 
   Signal: p.createTable({

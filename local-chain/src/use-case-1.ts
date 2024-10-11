@@ -8,14 +8,14 @@ async function main() {
   // System predicates
   const admin = await getIntuition(0)
 
-  const thingPredicate = await getOrCreateAtom(
-    admin.multivault,
-    'https://schema.org/Thing',
-  )
-  const organizationPredicate = await getOrCreateAtom(
-    admin.multivault,
-    'https://schema.org/Organization',
-  )
+  // const thingPredicate = await getOrCreateAtom(
+  //   admin.multivault,
+  //   'https://schema.org/Thing',
+  // )
+  // const organizationPredicate = await getOrCreateAtom(
+  //   admin.multivault,
+  //   'https://schema.org/Organization',
+  // )
   const personPredicate = await getOrCreateAtom(
     admin.multivault,
     'https://schema.org/Person',
@@ -101,7 +101,7 @@ async function main() {
 
   const metamaskWeb3ToolingTriple = await alice.multivault.createTriple({
     subjectId: metamask,
-    predicateId: thingPredicate,
+    predicateId: tagPredicate,
     objectId: web3Tooling,
     initialDeposit: parseEther('0.00042'),
   })
@@ -115,6 +115,32 @@ async function main() {
     counterVault,
     parseEther('0.00042'),
   )
+
+  // Metamask thing
+
+  const tally = await getOrCreateAtomWithJson(
+    bob.multivault,
+    {
+      "@context": "https://schema.org",
+      "@type": "Thing",
+      name: "Tally",
+      description: "Web3 wallet",
+    }
+  )
+
+  const tallyWeb3ToolingTriple = await bob.multivault.createTriple({
+    subjectId: tally,
+    predicateId: tagPredicate,
+    objectId: web3Tooling,
+    initialDeposit: parseEther('0.00042'),
+  })
+
+  const anonymous = await getIntuition(3)
+  await anonymous.multivault.depositTriple(
+    tallyWeb3ToolingTriple.vaultId,
+    parseEther('0.00042'),
+  )
+
 
 
 }
