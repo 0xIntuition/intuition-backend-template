@@ -72,6 +72,28 @@ async function main() {
     initialDeposit: 100n,
   })
 
+  // Carol profile
+  const carol = await getIntuition(3)
+
+  const carolAccount = await getOrCreateAtom(carol.multivault, carol.account.address)
+
+  const carolPerson = await getOrCreateAtomWithJson(
+    carol.multivault,
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: 'Carol Brown',
+      image: faker.image.avatar(),
+      url: 'https://carol.example.com',
+    } as WithContext<Person>)
+
+  await carol.multivault.createTriple({
+    subjectId: carolAccount,
+    predicateId: personPredicate,
+    objectId: carolPerson,
+    initialDeposit: 100n,
+  })
+
 
   // Metamask thing
 
@@ -111,12 +133,12 @@ async function main() {
     metamaskWeb3ToolingTriple.vaultId,
   )
 
-  const downvote = await bob.multivault.depositTriple(
-    counterVault,
-    parseEther('0.00042'),
-  )
+  // const downvote = await bob.multivault.depositTriple(
+  //   counterVault,
+  //   parseEther('0.00042'),
+  // )
 
-  // Metamask thing
+  // Tally thing
 
   const tally = await getOrCreateAtomWithJson(
     bob.multivault,
@@ -135,7 +157,7 @@ async function main() {
     initialDeposit: parseEther('0.00042'),
   })
 
-  const anonymous = await getIntuition(3)
+  const anonymous = await getIntuition(4)
   await anonymous.multivault.depositTriple(
     tallyWeb3ToolingTriple.vaultId,
     parseEther('0.00042'),

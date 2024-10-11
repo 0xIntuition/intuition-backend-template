@@ -69,6 +69,22 @@ export async function getOrCreateAtom(multivault: Multivault, uri: string) {
   }
 }
 
+export async function getCreateOrDepositOnTriple(multivault: Multivault, subjectId: bigint, predicateId: bigint, objectId: bigint, initialDeposit?: bigint) {
+
+  const tripleId = await multivault.getTripleIdFromAtoms(subjectId, predicateId, objectId)
+  if (tripleId) {
+    if (initialDeposit) {
+      await multivault.depositTriple(tripleId, initialDeposit)
+    }
+    return tripleId
+  } else {
+    console.log(`Creating triple: ${subjectId} ${predicateId} ${objectId} ...`)
+    const { vaultId } = await multivault.createTriple({ subjectId, predicateId, objectId, initialDeposit })
+    console.log(`vaultId: ${vaultId}`)
+    return vaultId
+  }
+}
+
 export async function getOrCreateAtomWithJson(multivault: Multivault, json: any) {
   // TODO: Check if the JSON is already pinned
   const cid = await pinataPinJSON(json)
