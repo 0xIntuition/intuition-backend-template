@@ -21,7 +21,6 @@ export async function handleTriple(context: Context, triple: Schema["Triple"]) {
         subjectId: triple.subjectId,
         predicateId: triple.predicateId,
         objectId: triple.objectId,
-        label: triple.label,
         vaultId: triple.vaultId,
         counterVaultId: triple.counterVaultId,
         shares: position.shares,
@@ -58,6 +57,13 @@ export async function handleTriple(context: Context, triple: Schema["Triple"]) {
       || (predicate.type === "OrganizationPredicate" && object.type === "Organization")) {
       await Account.update({
         id: subject.data.toLowerCase() as Address,
+        data: {
+          label: object.label,
+          image: object.image,
+        },
+      });
+      await Atom.update({
+        id: subjectId,
         data: {
           label: object.label,
           image: object.image,

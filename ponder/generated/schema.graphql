@@ -1124,7 +1124,6 @@ type Claim {
   subjectId: BigInt!
   predicateId: BigInt!
   objectId: BigInt!
-  label: String
   shares: BigInt!
   counterShares: BigInt!
   vaultId: BigInt!
@@ -1193,16 +1192,6 @@ input ClaimFilter {
   objectId_lt: BigInt
   objectId_gte: BigInt
   objectId_lte: BigInt
-  label: String
-  label_not: String
-  label_in: [String]
-  label_not_in: [String]
-  label_contains: String
-  label_not_contains: String
-  label_starts_with: String
-  label_ends_with: String
-  label_not_starts_with: String
-  label_not_ends_with: String
   shares: BigInt
   shares_not: BigInt
   shares_in: [BigInt]

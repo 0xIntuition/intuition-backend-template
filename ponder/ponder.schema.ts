@@ -283,8 +283,6 @@ export default createSchema((p) => ({
     predicateId: p.bigint().references("Atom.id"),
     objectId: p.bigint().references("Atom.id"),
 
-    label: p.string().optional(),
-
     shares: p.bigint(),
     counterShares: p.bigint(),
 

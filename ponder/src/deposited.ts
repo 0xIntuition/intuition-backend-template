@@ -133,7 +133,6 @@ ponder.on("EthMultiVault:Deposited", async ({ event, context }) => {
           subjectId: triple.subjectId,
           predicateId: triple.predicateId,
           objectId: triple.objectId,
-          label: triple.label,
 
           vaultId: triple.vaultId,
           counterVaultId: triple.counterVaultId,
@@ -181,7 +180,6 @@ ponder.on("EthMultiVault:Deposited", async ({ event, context }) => {
             subjectId: triple.subjectId,
             predicateId: triple.predicateId,
             objectId: triple.objectId,
-            label: triple.label,
 
             vaultId: triple.vaultId,
             counterVaultId: triple.counterVaultId,
