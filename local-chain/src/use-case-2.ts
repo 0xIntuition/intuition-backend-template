@@ -7,7 +7,7 @@ async function main() {
   // System predicates
   const admin = await getIntuition(0)
 
-  const followPredicate = await getOrCreateAtom(
+  const follow = await getOrCreateAtom(
     admin.multivault,
     'https://schema.org/FollowAction',
   )
@@ -22,29 +22,29 @@ async function main() {
     } as WithContext<Thing>
   )
 
-  // Alice profile
+  // Alice
   const alice = await getIntuition(1)
   const aliceAccount = await getOrCreateAtom(alice.multivault, alice.account.address)
 
-  // Bob profile
+  // Bob
   const bob = await getIntuition(2)
   const bobAccount = await getOrCreateAtom(bob.multivault, bob.account.address)
 
-  // Carol profile
+  // Carol
   const carol = await getIntuition(3)
   const carolAccount = await getOrCreateAtom(carol.multivault, carol.account.address)
 
   // Alice follows Bob
-  await getCreateOrDepositOnTriple(alice.multivault, i, followPredicate, bobAccount, parseEther('0.00042'))
+  await getCreateOrDepositOnTriple(alice.multivault, i, follow, bobAccount, parseEther('0.00042'))
 
   // Alice follows Carol
-  await getCreateOrDepositOnTriple(alice.multivault, i, followPredicate, carolAccount, parseEther('0.00042'))
+  await getCreateOrDepositOnTriple(alice.multivault, i, follow, carolAccount, parseEther('0.00042'))
 
   // Bob follows Alice
-  await getCreateOrDepositOnTriple(bob.multivault, i, followPredicate, aliceAccount, parseEther('0.00042'))
+  await getCreateOrDepositOnTriple(bob.multivault, i, follow, aliceAccount, parseEther('0.00042'))
 
   // Carol follows Bob
-  await getCreateOrDepositOnTriple(carol.multivault, i, followPredicate, bobAccount, parseEther('0.00042'))
+  await getCreateOrDepositOnTriple(carol.multivault, i, follow, bobAccount, parseEther('0.00042'))
 
 }
 

@@ -8,14 +8,6 @@ async function main() {
   // System predicates
   const admin = await getIntuition(0)
 
-  // const thingPredicate = await getOrCreateAtom(
-  //   admin.multivault,
-  //   'https://schema.org/Thing',
-  // )
-  // const organizationPredicate = await getOrCreateAtom(
-  //   admin.multivault,
-  //   'https://schema.org/Organization',
-  // )
   const personPredicate = await getOrCreateAtom(
     admin.multivault,
     'https://schema.org/Person',
