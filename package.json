@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "hasura-local:apply": "cd hasura && hasura metadata apply --admin-secret myadminsecretkey && cd ..",
+    "hasura-local:migrate": "cd hasura && hasura migrate apply --database-name ponder --admin-secret myadminsecretkey && cd ..",
     "hasura-local:export": "cd hasura && hasura metadata export --admin-secret myadminsecretkey && cd ..",
     "dev:start": "docker-compose up -d ",
     "dev:stop:reset": "docker-compose down -v",

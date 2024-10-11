@@ -90,17 +90,6 @@ array_relationships:
         remote_table:
           name: Signal
           schema: public
-remote_relationships:
-  - definition:
-      to_remote_schema:
-        lhs_fields:
-          - id
-        remote_field:
-          followers:
-            arguments:
-              account: $id
-        remote_schema: apollo
-    name: followers
 select_permissions:
   - role: anonymous
     permission:

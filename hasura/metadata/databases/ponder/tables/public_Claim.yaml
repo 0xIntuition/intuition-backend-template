@@ -85,7 +85,6 @@ select_permissions:
         - vaultId
         - accountId
         - id
-        - label
       filter: {}
       limit: 100
       allow_aggregations: true

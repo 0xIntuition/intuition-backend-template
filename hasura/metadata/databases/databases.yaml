@@ -7,3 +7,4 @@
       isolation_level: read-committed
       use_prepared_statements: false
   tables: "!include ponder/tables/tables.yaml"
+  functions: "!include ponder/functions/functions.yaml"
