@@ -9,7 +9,8 @@
     "dev:start": "docker-compose up -d ",
     "dev:stop:reset": "docker-compose down -v",
     "dev:stop": "docker-compose down",
-    "dev": "pnpm dev:stop:reset && pnpm dev:start"
+    "dev": "pnpm dev:stop:reset && pnpm dev:start",
+    "dev:hasura": "pnpm hasura-local:apply && pnpm hasura-local:migrate && pnpm hasura-local:apply"
   },
   "packageManager": "pnpm@9.1.3+sha256.7f63001edc077f1cff96cacba901f350796287a2800dfa83fe898f94183e4f5f"
 }

@@ -40,7 +40,7 @@ Configure hasura
 
 ```
 cd ..
-pnpm hasura-local:apply
+pnpm dev:hasura
 ```
 
 Open http://localhost:8080/
