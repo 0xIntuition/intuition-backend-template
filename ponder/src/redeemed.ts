@@ -63,14 +63,12 @@ ponder.on("EthMultiVault:Redeemed", async ({ event, context }) => {
     functionName: "currentSharePrice",
   });
 
-  const vault = await Vault.update({
+  const vault = await Vault.findUnique({
     id: vaultId,
-    data: ({ current }) => ({
-      totalShares: current.totalShares - sharesRedeemedBySender,
-      currentSharePrice,
-      positionCount: current.positionCount - deletedPositions,
-    })
   });
+  if (vault === null) {
+    return;
+  }
 
   let triple;
 
@@ -135,6 +133,16 @@ ponder.on("EthMultiVault:Redeemed", async ({ event, context }) => {
     });
     stats = statsData;
   }
+
+  await Vault.update({
+    id: vaultId,
+    data: ({ current }) => ({
+      totalShares: current.totalShares - sharesRedeemedBySender,
+      currentSharePrice,
+      positionCount: current.positionCount - deletedPositions,
+    })
+  });
+
 
   await StatsHour.upsert({
     id: hourId(event.block.timestamp),
