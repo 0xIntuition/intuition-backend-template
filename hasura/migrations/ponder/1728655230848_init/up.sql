@@ -12,6 +12,13 @@ AND "public"."Claim"."predicateId" = predicate
 AND "public"."Claim"."accountId" = "address";
 $$;
 
+CREATE FUNCTION public.following(address text) RETURNS SETOF public."Account"
+    LANGUAGE sql STABLE
+    AS $$
+SELECT *
+FROM accounts_that_claim_about_account( address, 11, 3);
+$$;
+
 CREATE FUNCTION public.claims_from_following(address text) RETURNS SETOF public."Claim"
     LANGUAGE sql STABLE
     AS $$
@@ -21,9 +28,4 @@ CREATE FUNCTION public.claims_from_following(address text) RETURNS SETOF public.
         WHERE "public"."Claim"."accountId" IN (SELECT "id" FROM following(address));
 $$;
 
-CREATE FUNCTION public.following(address text) RETURNS SETOF public."Account"
-    LANGUAGE sql STABLE
-    AS $$
-SELECT *
-FROM accounts_that_claim_about_account( address, 23, 1);
-$$;
+

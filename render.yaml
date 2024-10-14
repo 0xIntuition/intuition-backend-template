@@ -1,0 +1,61 @@
+databases:
+- name: hasura
+  databaseName: hasura_b7fp
+  user: hasura_b7fp_user
+  plan: basic-256mb
+  region: oregon
+  ipAllowList:
+  - source: 0.0.0.0/0
+    description: everywhere
+  postgresMajorVersion: "16"
+  diskSizeGB: 15
+services:
+- type: web
+  name: ponder-indexer
+  runtime: node
+  plan: starter
+  envVars:
+    - key: IPFS_GATEWAY_URL
+      sync: false
+    - key: PINATA_GATEWAY_TOKEN
+      sync: false
+    - key: PONDER_RPC_URL_1
+      sync: false
+    - key: PONDER_RPC_URL_8453
+      sync: false
+    - key: PONDER_RPC_URL_84532
+      sync: false
+    - key: DATABASE_URL
+      fromDatabase:
+        name: hasura
+        property: connectionString
+  region: oregon
+  buildCommand: pnpm i
+  startCommand: pnpm start --config ponder.base.config.ts
+  healthCheckPath: /health
+  rootDir: ponder
+- type: web
+  name: hasura
+  runtime: docker
+  image: hasura/graphql-engine:v2.0.2
+  dockerCommand: graphql-engine serve --server-port $PORT
+  plan: starter
+  envVars:
+  - key: HASURA_GRAPHQL_UNAUTHORIZED_ROLE
+    value: anonymous
+  - key: HASURA_GRAPHQL_ADMIN_SECRET
+    sync: false
+  - key: HASURA_GRAPHQL_ENABLE_CONSOLE
+    sync: false
+  - key: PORT
+    sync: false
+  - key: HASURA_GRAPHQL_METADATA_DATABASE_URL
+    fromDatabase:
+      name: hasura
+      property: connectionString
+  region: oregon
+  healthCheckPath: /healthz
+  dockerContext: .
+  dockerfilePath: ./Dockerfile
+  autoDeploy: false
+version: "1"
