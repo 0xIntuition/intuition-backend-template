@@ -2,12 +2,13 @@ databases:
 - name: hasura
   databaseName: hasura_b7fp
   user: hasura_b7fp_user
-  plan: starter
+  plan: basic-1gb
   region: oregon
   ipAllowList:
   - source: 0.0.0.0/0
     description: everywhere
   postgresMajorVersion: "16"
+  diskSizeGB: 15
 services:
 - type: web
   name: ponder-indexer
