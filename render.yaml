@@ -13,7 +13,7 @@ services:
 - type: web
   name: ponder-indexer
   runtime: node
-  plan: starter
+  plan: standard
   envVars:
     - key: IPFS_GATEWAY_URL
       sync: false
