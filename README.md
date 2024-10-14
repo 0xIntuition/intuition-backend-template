@@ -28,14 +28,6 @@ pnpm dev:mainnet
 
 Open http://localhost:42069/graphql
 
-Start custom resolvers
-
-```
-cd apollo
-pnpm i
-pnpm start
-```
-
 Configure hasura
 
 ```
