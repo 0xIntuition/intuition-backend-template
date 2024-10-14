@@ -38,7 +38,7 @@ services:
   name: hasura
   runtime: docker
   image:
-    url: hasura/graphql-engine:v2.0.2
+    url: docker.io/hasura/graphql-engine:v2.0.2
   dockerCommand: graphql-engine serve --server-port $PORT
   plan: starter
   envVars:
