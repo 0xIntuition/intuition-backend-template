@@ -35,7 +35,7 @@ services:
   rootDir: ponder
 - type: web
   name: hasura
-  runtime: docker
+  runtime: image
   image:
     url: docker.io/hasura/graphql-engine:v2.0.2
   dockerCommand: graphql-engine serve --server-port $PORT
