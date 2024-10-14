@@ -55,7 +55,5 @@ services:
       property: connectionString
   region: oregon
   healthCheckPath: /healthz
-  dockerContext: .
-  dockerfilePath: ./Dockerfile
   autoDeploy: false
 version: "1"
