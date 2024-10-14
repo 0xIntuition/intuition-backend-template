@@ -4,6 +4,21 @@ import { Address } from "viem";
 export async function handleTriple(context: Context, triple: Schema["Triple"]) {
   const { Account, Atom, Position, Claim, PredicateObject } = context.db;
 
+  await PredicateObject.upsert({
+    id: `${triple.predicateId}-${triple.objectId}`,
+    create: {
+      predicateId: triple.predicateId,
+      objectId: triple.objectId,
+      claimCount: 0,
+      tripleCount: 1,
+    },
+    update: ({ current }) => {
+      return {
+        tripleCount: current.tripleCount + 1,
+      }
+    },
+  });
+
   // Because of race conditions, we need to make sure Claims are created for this Triple
   // This happens when a Triple is created with initialDeposit > 0
   const positions = await Position.findMany({
@@ -37,7 +52,11 @@ export async function handleTriple(context: Context, triple: Schema["Triple"]) {
         claimCount: 1,
         tripleCount: 1,
       },
-      update: {},
+      update: ({ current }) => {
+        return {
+          claimCount: current.claimCount + 1,
+        }
+      },
     });
   }
 
