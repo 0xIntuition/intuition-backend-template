@@ -8,7 +8,7 @@ if (!process.env.PINATA_GATEWAY_TOKEN) {
 
 export async function fetchFileFromIPFS(cid: string) {
   const url = `${process.env.IPFS_GATEWAY_URL}/ipfs/${cid}`;
-  const timeout = 5000;
+  const timeout = 500;
   const controller = new AbortController();
   const signal = controller.signal;
 
