@@ -19,8 +19,10 @@ PONDER_RPC_URL_84532
 After all services up and running, look up hasura admin secret in the render dashboard, and run this command
 
 ```
-hasura migrate apply --project hasura --database-name ponder --endpoint https://CHANGEME.onrender.com --admin-secret CHANGEME
-hasura metadata apply --project hasura --database-name ponder --endpoint https://CHANGEME.onrender.com --admin-secret CHANGEME
+hasura metadata apply --project hasura --endpoint https://hasura-CHANGEME.onrender.com --admin-secret CHANGEME
+hasura metadata ic drop --project hasura --endpoint https://hasura-CHANGEME.onrender.com --admin-secret CHANGEME
+hasura migrate apply --project hasura --database-name ponder --endpoint https://hasura-CHANGEME.onrender.com --admin-secret CHANGEME
+hasura metadata apply --project hasura --endpoint https://hasura-CHANGEME.onrender.com --admin-secret CHANGEME
 ```
 
 Start postgres, hasura, pgweb
