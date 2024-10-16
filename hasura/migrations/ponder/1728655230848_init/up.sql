@@ -28,4 +28,17 @@ CREATE FUNCTION public.claims_from_following(address text) RETURNS SETOF public.
         WHERE "public"."Claim"."accountId" IN (SELECT "id" FROM following(address));
 $$;
 
-
+CREATE FUNCTION public.signals_from_following (address text)
+	RETURNS SETOF public. "Signal"
+	LANGUAGE sql
+	STABLE
+	AS $$
+	SELECT
+		*
+	FROM
+		"public"."Signal"
+	WHERE
+		"public"."Signal"."accountId" IN(
+			SELECT
+				"id" FROM FOLLOWING (address));
+$$;
