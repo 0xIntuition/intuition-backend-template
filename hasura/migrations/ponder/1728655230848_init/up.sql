@@ -9,7 +9,7 @@ JOIN "public"."Account" ON "public"."Account"."atomId" = "public"."Claim"."objec
 WHERE 
  "public"."Claim"."subjectId" = subject
 AND "public"."Claim"."predicateId" = predicate
-AND "public"."Claim"."accountId" = "address";
+AND "public"."Claim"."accountId" = LOWER(address);
 $$;
 
 CREATE FUNCTION public.following(address text) RETURNS SETOF public."Account"
