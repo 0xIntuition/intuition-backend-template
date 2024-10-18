@@ -6,7 +6,7 @@ import { EthMultiVaultAbi } from "./abis/EthMultiVaultAbi";
 export default createConfig({
   database: {
     kind: "postgres",
-    schema: `ponder-${process.env.RENDER_INSTANCE_ID}`,
+    schema: "public",
   },
   networks: {
     base: {
