@@ -57,7 +57,7 @@ ponder.on("EthMultiVault:AtomCreated", async ({ event, context }) => {
   });
 
   let valueId;
-  const data = fromHex(atomData, "string").replace("\u0000", "");
+  const data = fromHex(atomData, "string").replace(/\x00/g, "");
 
   let atomImage = undefined;
 
