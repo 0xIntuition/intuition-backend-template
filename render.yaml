@@ -47,9 +47,7 @@ services:
   - key: HASURA_GRAPHQL_ADMIN_SECRET
     sync: false
   - key: HASURA_GRAPHQL_ENABLE_CONSOLE
-    sync: false
-  - key: PORT
-    sync: false
+    value: true
   - key: HASURA_GRAPHQL_METADATA_DATABASE_URL
     fromDatabase:
       name: hasura
