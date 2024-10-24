@@ -24,13 +24,14 @@ export default createConfig({
       abi: EthMultiVaultAbi,
       address: "0x1A6950807E33d5bC9975067e6D6b5Ea4cD661665",
       startBlock: 12947309,
+      endBlock: 13660334,
     },
   },
   blocks: {
     ChainlinkPriceOracle: {
       network: "base",
       startBlock: 18786903,
-      // endBlock: 20565161,
+      endBlock: 18786993,
       interval: 30 * 60,
     },
   },
