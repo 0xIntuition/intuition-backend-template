@@ -1,6 +1,7 @@
 # Intuition backend template
 
-![diagram-export-02-10-2024-17_07_54](https://github.com/user-attachments/assets/0aa99e3d-f24a-45c5-ab2b-e2719e9bb902)
+![diagram-export-24-10-2024-11_37_18](https://github.com/user-attachments/assets/9602cb32-a4f7-4cd1-913a-b9973d9ef55c)
+
 
 
 ## Deploy to render
