@@ -1,0 +1,17 @@
+type Mutation {
+  uploadThing(
+    arg1: ThingInput!
+  ): ThingOutput
+}
+
+input ThingInput {
+  description: String
+  image: String
+  name: String
+  url: String
+}
+
+type ThingOutput {
+  cid: String
+}
+
