@@ -388,7 +388,6 @@ export default createSchema((p) => ({
     url: p.string().optional(),
   }, {
     nameIndex: p.index("name"),
-    descriptionIndex: p.index("description"),
     urlIndex: p.index("url"),
   }),
 
@@ -405,7 +404,6 @@ export default createSchema((p) => ({
     email: p.string().optional(),
   }, {
     nameIndex: p.index("name"),
-    descriptionIndex: p.index("description"),
     urlIndex: p.index("url"),
   }),
 
@@ -421,7 +419,6 @@ export default createSchema((p) => ({
     email: p.string().optional(),
   }, {
     nameIndex: p.index("name"),
-    descriptionIndex: p.index("description"),
     urlIndex: p.index("url"),
   }),
 
