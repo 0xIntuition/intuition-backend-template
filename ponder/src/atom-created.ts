@@ -162,8 +162,8 @@ ponder.on("EthMultiVault:AtomCreated", async ({ event, context }) => {
   await Account.update({
     id: atomWallet.toLowerCase(),
     data: {
-      label: updatedAtom!.label,
-      image: updatedAtom!.image,
+      label: `${updatedAtom!.label}`,
+      image: `${updatedAtom!.image}`,
     },
   });
 
